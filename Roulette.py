@@ -48,6 +48,7 @@ random.seed(3456)
 
 def SimulateGame(bets,amount,minimun):
     result=[]
+    result_full=[]
     def AboveMinimum(amount, minimun):
         for i in amount:
             if i < minimun:
@@ -69,7 +70,6 @@ def SimulateGame(bets,amount,minimun):
         randoms = random.randrange(37)
         print("Spinning the Wheel...")
         print("Ball lands on " + str(randoms))
-
         for i in bets:
             if i != randoms:
                 result_S.append(0)
@@ -86,7 +86,19 @@ def SimulateGame(bets,amount,minimun):
         result_amount2 = [result_S[j]* result_amount[j] for j in range(len(amount))]
         result_amount3= [item*30 for item in result_amount2]
     print(result_amount3)
-    return result_amount3
+    result4=[]
+    result_full=[]
+    for w in result_amount3:
+        if w == 0 :
+            result4.append(1)
+        else :
+            result4.append(0)
+    result_full=[result4[j]* amount[j] for j in range(len(amount))]
+    casino_gain=sum(result_full)
+    print(casino_gain)
+    result_final=(casino_gain,result_amount3)
+    print(result_final)
+    return
 minimun=100
 bets1=[10, 24, 36, 0, 11, 24]
 amounts1=[10, 85, 120, 65, 150, 122]
