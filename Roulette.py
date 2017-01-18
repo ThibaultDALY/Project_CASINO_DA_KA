@@ -34,10 +34,16 @@ def SpinTheWheel(bets):
             result.append(0)
         else:
             result.append(i)
+    number = sum(x > 0 for x in result)
+    if number>0:
+        print("There are %d correct bet(s)" % (number,))
+    else :
+        print("No winners this round")
     return print(result)
-
-bets1=[10, 24, 36, 0, 11, 24]
+bets1=[10, 4, 36, 0, 11, 2]
 SpinTheWheel(bets1)
+
+
 
 
 
