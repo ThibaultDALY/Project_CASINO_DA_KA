@@ -34,7 +34,6 @@ def SpinTheWheel(bets):
             result.append(0)
         else:
             result.append(i)
-
     return print(result)
 
 bets1=[10, 24, 36, 0, 11, 24]
