@@ -6,7 +6,7 @@ random.seed(3456)
 # my_randoms = random.sample(range(1,11),5)
 # print(my_randoms)
 
-def SimulateGame(bets,amount,minimun):
+def Roulette(bets,amount,minimun):
 
     result=[]
     #minimum bet function
@@ -64,8 +64,8 @@ def SimulateGame(bets,amount,minimun):
     result_final=[casino_gain,lost_bets]
     print(result_final)
     return
-minimun=100
-bets1=[10, 24, 36, 0, 11, 24]
-amounts1=[10, 85, 120, 65, 150, 122]
-SimulateGame(bets1,amounts1,minimun)
-SimulateGame(bets1,amounts1,minimun)
+# minimun=100
+# bets1=[10, 24, 36, 0, 11, 24]
+# amounts1=[10, 85, 120, 65, 150, 122]
+# Roulette(bets1,amounts1,minimun)
+# Roulette(bets1,amounts1,minimun)
