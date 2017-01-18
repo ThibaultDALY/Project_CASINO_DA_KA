@@ -55,7 +55,7 @@ def SimulateGame(bets,amount,minimun):
             else:
                 result.append(True)
         return result
-    print(AboveMinimum(amount, minimun))
+    AboveMinimum(amount, minimun)
     result1=[]
     for j in result:
         if j == True :
@@ -63,7 +63,7 @@ def SimulateGame(bets,amount,minimun):
         else:
             result1.append(0)
         result_amount = [result[j] * amount[j] for j in range(len(amount))]
-    print(result_amount)
+    result_amount
     result_S = []
     def SpinTheWheel(bets):
         randoms = random.randrange(37)
@@ -81,12 +81,12 @@ def SimulateGame(bets,amount,minimun):
         else:
             print("No winners this round")
         return result_S
-    print(SpinTheWheel(bets))
+    SpinTheWheel(bets)
     for k in result_S:
         result_amount2 = [result_S[j]* result_amount[j] for j in range(len(amount))]
         result_amount3= [item*30 for item in result_amount2]
     print(result_amount3)
-    return
+    return result_amount3
 minimun=100
 bets1=[10, 24, 36, 0, 11, 24]
 amounts1=[10, 85, 120, 65, 150, 122]
