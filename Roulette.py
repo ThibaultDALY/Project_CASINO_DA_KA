@@ -6,17 +6,18 @@ random.seed(3456)
 # my_randoms = random.sample(range(1,11),5)
 # print(my_randoms)
 
-# A function AboveMinimum that takes a list of betted amounts and returns a list of booleans
-# def AboveMinium(amount,minimun):
-#     result = []
-#     for i in amount:
-#         if i < minimun:
-#             result.append(False)
-#         else : result.append(True)
-#     return print(result)
-#
-# ammount1=[10, 220, 120]
-# AboveMinium(ammount1,100)
+#A function AboveMinimum that takes a list of betted amounts and returns a list of booleans
+
+def AboveMinium(amount,minimun):
+    result = []
+    for i in amount:
+        if i < minimun:
+            result.append(False)
+        else : result.append(True)
+    return print(result)
+
+ammount1=[10, 85, 120, 65, 150, 122]
+AboveMinium(ammount1,100)
 
 # A function SpinTheWheel that has a variables ‘bets’ which is a list of integers ranging from 0 to 36 (both included).
 # It should determine a random number between that range and return a list of the same length as bets indicating which
@@ -25,16 +26,19 @@ random.seed(3456)
 
 def SpinTheWheel(bets):
     randoms= random.randrange(37)
+    print("Spinning the Wheel...")
     print("Ball lands on " +str(randoms))
-    result_Spin = []
+    result = []
     for i in bets:
         if i != randoms:
-            result_Spin.append(False)
+            result.append(0)
         else:
-            result_Spin.append(True)
-    return result_Spin, randoms # multiple output return
-bets1=[14, 24, 24]
-result_Spin,randoms=SpinTheWheel(bets1) #split the tuple
+            result.append(i)
 
-print(result_Spin)
+    return print(result)
+
+bets1=[10, 24, 36, 0, 11, 24]
+SpinTheWheel(bets1)
+
+
 
