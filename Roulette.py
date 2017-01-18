@@ -7,8 +7,9 @@ random.seed(3456)
 # print(my_randoms)
 
 def SimulateGame(bets,amount,minimun):
+
     result=[]
-    result_full=[]
+    #minimum bet function
     def AboveMinimum(amount, minimun):
         for i in amount:
             if i < minimun:
@@ -18,6 +19,7 @@ def SimulateGame(bets,amount,minimun):
         return result
     AboveMinimum(amount, minimun)
     result1=[]
+    # loop to deetmine the bets over the minimum in order to play
     for j in result:
         if j == True :
             result1.append(1)
@@ -27,7 +29,9 @@ def SimulateGame(bets,amount,minimun):
     result_amount
     #print(result_amount)
     result_S = []
+    # Spinning the Wheel function that determines the number of loosers and winners
     def SpinTheWheel(bets):
+
         randoms = random.randrange(37)
         print("Spinning the Wheel...")
         print("Ball lands on " + str(randoms))
@@ -43,13 +47,13 @@ def SimulateGame(bets,amount,minimun):
             print("No winners this round")
         return result_S
     SpinTheWheel(bets)
+    # computation on the amount lost and won by palyers and the casino
     for k in result_S:
         result_amount2 = np.array(result_S)* np.array(result_amount)
-        result_amount3= [item*30 for item in result_amount2]
-    #print(result_amount3)
+        lost_bets= [item*30 for item in result_amount2]
+    #print(lost_bets)
     result4=[]
-    result_full=[]
-    for w in result_amount3:
+    for w in lost_bets:
         if w == 0 :
             result4.append(1)
         else :
@@ -57,7 +61,7 @@ def SimulateGame(bets,amount,minimun):
     result_full=np.array(result4)* np.array(amount)
     casino_gain=sum(result_full)
     #print(casino_gain)
-    result_final=[casino_gain,result_amount3]
+    result_final=[casino_gain,lost_bets]
     print(result_final)
     return
 minimun=100
