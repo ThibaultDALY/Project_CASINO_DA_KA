@@ -63,19 +63,19 @@ def SimulateGame(bets,amounts):
     result_final=[casino_gain,lost_bets]
     print(result_final)
     return
-minimun=100
+
 bets1=[10, 24, 36, 0, 11, 24]
 amounts1=[10, 85, 120, 65, 150, 122]
 # Roulette(bets1,amounts1,minimun)
 # Roulette(bets1,amounts1,minimun)
 
 class Roulette(object):
-    def __init__(self,minimum):
+    def __init__(self, minimum):
         self.minimum = minimum
     def SimulateGame(self, bets, amounts):
         self.bets = bets
         self.amounts = amounts
         return SimulateGame(bets,amounts)
 
-Roulette(100).SimulateGame(bets1, amounts1)
-Roulette(100).SimulateGame(bets1, amounts1)
+
+
