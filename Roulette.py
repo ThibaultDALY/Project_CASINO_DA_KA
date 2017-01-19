@@ -6,18 +6,18 @@ random.seed(3456)
 # my_randoms = random.sample(range(1,11),5)
 # print(my_randoms)
 
-def Roulette(bets,amount,minimun):
-
+def SimulateGame(bets,amounts):
     result=[]
+    minimum = 100
     #minimum bet function
-    def AboveMinimum(amount, minimun):
-        for i in amount:
-            if i < minimun:
+    def AboveMinimum(amounts, minimum):
+        for i in amounts:
+            if i < minimum:
                 result.append(False)
             else:
                 result.append(True)
         return result
-    AboveMinimum(amount, minimun)
+    AboveMinimum(amounts, minimum)
     result1=[]
     # loop to deetmine the bets over the minimum in order to play
     for j in result:
@@ -25,13 +25,12 @@ def Roulette(bets,amount,minimun):
             result1.append(1)
         else:
             result1.append(0)
-        result_amount = np.array(result) * np.array(amount)
+        result_amount = np.array(result) * np.array(amounts)
     result_amount
     #print(result_amount)
     result_S = []
     # Spinning the Wheel function that determines the number of loosers and winners
     def SpinTheWheel(bets):
-
         randoms = random.randrange(37)
         print("Spinning the Wheel...")
         print("Ball lands on " + str(randoms))
@@ -51,21 +50,32 @@ def Roulette(bets,amount,minimun):
     for k in result_S:
         result_amount2 = np.array(result_S)* np.array(result_amount)
         lost_bets= [item*30 for item in result_amount2]
-    #print(lost_bets)
+    # print(lost_bets)
     result4=[]
     for w in lost_bets:
         if w == 0 :
             result4.append(1)
         else :
             result4.append(0)
-    result_full=np.array(result4)* np.array(amount)
+    result_full=np.array(result4)* np.array(amounts)
     casino_gain=sum(result_full)
-    #print(casino_gain)
+    # print(casino_gain)
     result_final=[casino_gain,lost_bets]
     print(result_final)
     return
-# minimun=100
-# bets1=[10, 24, 36, 0, 11, 24]
-# amounts1=[10, 85, 120, 65, 150, 122]
+minimun=100
+bets1=[10, 24, 36, 0, 11, 24]
+amounts1=[10, 85, 120, 65, 150, 122]
 # Roulette(bets1,amounts1,minimun)
 # Roulette(bets1,amounts1,minimun)
+
+class Roulette(object):
+    def __init__(self,minimum):
+        self.minimum = minimum
+    def SimulateGame(self, bets, amounts):
+        self.bets = bets
+        self.amounts = amounts
+        return SimulateGame(bets,amounts)
+
+Roulette(100).SimulateGame(bets1, amounts1)
+Roulette(100).SimulateGame(bets1, amounts1)
