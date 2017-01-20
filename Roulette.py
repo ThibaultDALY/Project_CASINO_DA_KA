@@ -1,8 +1,10 @@
 
 import random
 import numpy as np
+
 # This is used to fixed the random generator so we can test the output
-random.seed(3456)
+#random.seed(3456)
+
 # my_randoms = random.sample(range(1,11),5)
 # print(my_randoms)
 
@@ -54,9 +56,3 @@ class Roulette(object):
         result_final=[sum(result_full),lost_bets]
         print(result_final) # list of the full lost and gains from the customers and casino :
         return
-
-bets1=[10, 24, 36, 0, 11, 24]
-amounts1=[10, 85, 120, 65, 150, 122]
-
-# print(table1.SimulateGame(bets1,amounts1))
-# print(table1.SimulateGame(bets1,amounts1))
