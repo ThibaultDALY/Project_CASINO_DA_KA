@@ -95,3 +95,37 @@
 # bets1=[10, 24, 36, 0, 11, 24]
 # amounts1=[10, 85, 120, 65, 150, 122]
 # SimulateGame(bets1,amounts1,minimun)
+
+class Shape(object):
+    def shrink(self, factor):
+        return self
+
+    def surface(self):
+        return 0
+
+class Circle(Shape):
+    def __init__(self, color, radius):
+        self.color = color
+        self.radius = radius
+
+    def shrink(self, factor):
+        self.radius += factor
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+
+    def surface(self):
+        surf = self.side * self.side
+        return surf
+
+circ1 = Circle("yellow", 2.5)
+circ1.shrink(-1)
+print(circ1.radius)
+shape1 = Shape()
+print(shape1.surface())
+square1 = Square(2)
+square2 = Square(4)
+print(square2.surface())
+
+print(Square(2))
