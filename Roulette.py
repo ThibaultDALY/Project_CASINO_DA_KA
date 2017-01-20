@@ -12,7 +12,7 @@ def SimulateGame(bets,amounts):
     #minimum bet function
     def AboveMinimum(amounts, minimum):
         for i in amounts:
-            if i < minimum:
+            if i < self.minimum:
                 result.append(False)
             else:
                 result.append(True)
