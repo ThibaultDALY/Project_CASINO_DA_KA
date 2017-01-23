@@ -34,10 +34,10 @@ class Craps(object):
                 print("No winners this round")
             return result_S
         RollTheDices(bets)
-        print(result_S)
+        #print(result_S)
         for k in result_S:
             result_amount2 = np.array(result_S) * np.array(result_amount)
-            lost_bets = [item * 30 for item in result_amount2]
+            lost_bets = [item * 9 for item in result_amount2]
         result4 = []
         for w in lost_bets:
             if w == 0:
@@ -48,4 +48,7 @@ class Craps(object):
         result_full = np.array(result4) * np.array(amounts)  # list of the amounts in dollars won by the casino
         result_final = [sum(result_full), lost_bets]
         print(result_final)  # list of the full lost and gains from the customers and casino :
-        return
+        return result_final
+
+
+
