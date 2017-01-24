@@ -17,7 +17,7 @@ class Craps(object):
         AboveMinimum(amounts)
         result_amount = np.array(result) * np.array(amounts)
         result_S = []
-        print(result)
+        #print(result)
         def RollTheDices(bets):
             randoms = random.randrange(1, 13)
             print("Throwing the dices...")
@@ -47,7 +47,7 @@ class Craps(object):
         # print(result4) # list of the amounts won by the casino as dummies !
         result_full = np.array(result4) * np.array(amounts)  # list of the amounts in dollars won by the casino
         result_final = [sum(result_full), lost_bets]
-        print(result_final)  # list of the full lost and gains from the customers and casino :
+        #print(result_final)  # list of the full lost and gains from the customers and casino :
         return result_final
 
 
