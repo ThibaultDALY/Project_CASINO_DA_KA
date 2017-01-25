@@ -34,28 +34,29 @@ class CASINO(object):
             list_id.append(i)
         customers_dict = zip(list_id, customers_merged)
         customers_dict = dict(customers_dict)
+        print(customers_dict)
 
-        customers_dict2 = []
-        i = 0
-        # list that contains all the dictionary of 5 players
-        while i < 4:
-            customers_dict2.append(dict(random.sample(customers_dict.items(), 5)))
-            customers_dict = dict(set(customers_dict.items()) - set(customers_dict2[i].items()))
-            i += 1
-        print(customers_dict2)
+        def sortByKey(dict):
+            sortedByKeyDict = sorted(dict.items(), key=lambda t: t[0])
+            return sortedByKeyDict
+
+        print(sortByKey(customers_dict))
+
+        # customers_dict2 = []
+        # i = 0
+        # # list that contains all the dictionary of 5 players
+        # while i < 4:
+        #     customers_dict2.append(dict(random.sample(customers_dict.items(), 5)))
+        #     customers_dict = dict(set(customers_dict.items()) - set(customers_dict2[i].items()))
+        #     i += 1
+        # print(customers_dict2)
 
         minimum_roulette = [50, 100, 200]
         minimum_craps = [0, 25, 50]
 
-        # Roulette min same for 2 tables
-        table1_min = random.choice(minimum_roulette)
-        # Craps min same for 2 tables
-        table3_min = random.choice(minimum_craps)
-
         min_list = [random.choice(minimum_roulette),random.choice(minimum_roulette),random.choice(minimum_craps),
                random.choice(minimum_craps)]
         print(min_list)
-
 
         j = 0
         loop_amount = []
@@ -101,5 +102,7 @@ class CASINO(object):
         amounts_game1.append(loop_amounts)
         amounts_game1 = amounts_game1[0]
         print(amounts_game1)
+
+        #first_game
 
 CASINO(500, 2, 3, 3, 200, 20, 10, 2).SimulateEvening(1)
