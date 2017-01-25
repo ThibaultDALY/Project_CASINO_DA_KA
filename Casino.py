@@ -34,29 +34,32 @@ class CASINO(object):
             list_id.append(i)
         customers_dict = zip(list_id, customers_merged)
         customers_dict = dict(customers_dict)
-        print(customers_dict)
+        #print(customers_dict)
 
-        def sortByKey(dict):
-            sortedByKeyDict = sorted(dict.items(), key=lambda t: t[0])
-            return sortedByKeyDict
+        # def sortByKey(dict):
+        #     sortedByKeyDict = sorted(dict.items(), key=lambda t: t[0])
+        #     return sortedByKeyDict
+        #
+        # customers_dict = sortByKey(customers_dict)
+        #print(customers_dict)
 
-        print(sortByKey(customers_dict))
+        customers_dict2 = []
+        result =[]
+        i = 0
+        # list that contains all the dictionary of 5 players
 
-        # customers_dict2 = []
-        # i = 0
-        # # list that contains all the dictionary of 5 players
-        # while i < 4:
-        #     customers_dict2.append(dict(random.sample(customers_dict.items(), 5)))
-        #     customers_dict = dict(set(customers_dict.items()) - set(customers_dict2[i].items()))
-        #     i += 1
-        # print(customers_dict2)
+        while i < 4:
+            customers_dict2.append(dict(random.sample(customers_dict.items(), 5)))
+            customers_dict = dict(set(customers_dict.items()) - set(customers_dict2[i].items()))
+            i += 1
+        print(customers_dict2)
 
         minimum_roulette = [50, 100, 200]
         minimum_craps = [0, 25, 50]
 
         min_list = [random.choice(minimum_roulette),random.choice(minimum_roulette),random.choice(minimum_craps),
                random.choice(minimum_craps)]
-        print(min_list)
+        #print(min_list)
 
         j = 0
         loop_amount = []
