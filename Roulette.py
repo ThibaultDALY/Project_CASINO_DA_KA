@@ -25,19 +25,19 @@ class Roulette(object):
         result_S = []
         # Spinning the Wheel function that determines the number of loosers and winners
         def SpinTheWheel(bets):
-            randoms = random.randrange(37)
-            print("Spinning the Wheel...")
-            print("Ball lands on " + str(randoms))
+            randoms = random.randint(0,37)
+            #print("Spinning the Wheel...")
+            print("Ball lands on Roulette " + str(randoms))
             for i in bets:
                 if i != randoms:
                     result_S.append(0)
                 else:
                     result_S.append(1)
             number = sum(x > 0 for x in result_S)
-            if number > 0:
-                print("There are %d correct bet(s)" % (number,))
-            else:
-                print("No winners this round")
+            # if number > 0:
+            #     print("There are %d correct bet(s)" % (number,))
+            # else:
+            #     print("No winners this round")
             return result_S
         SpinTheWheel(bets)
         #print(result_S) # list of bets that are winners as dummies !
@@ -54,5 +54,5 @@ class Roulette(object):
         #print(result4) # list of the amounts won by the casino as dummies !
         result_full=np.array(result4)* np.array(amounts) # list of the amounts in dollars won by the casino
         result_final=[sum(result_full),lost_bets]
-        print(result_final) # list of the full lost and gains from the customers and casino :
+        #print(result_final) # list of the full lost and gains from the customers and casino :
         return result_final

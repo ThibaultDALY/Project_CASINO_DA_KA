@@ -6,7 +6,7 @@ import numpy as np
 import operator
 from collections import Counter
 from matplotlib import pyplot as plt
-
+#random.seed(3456)
 
 bets1 = [10, 24, 36, 0, 11, 24]
 bets2 = [10, 4, 6, 7, 11, 2]
@@ -14,8 +14,8 @@ amounts1 = [10, 85, 120, 65, 150, 122]
 
 # # Roulette Simulations
 # table1 = Roulette.Roulette(100)
-# table1.SimulateGame(bets1, amounts1)
-# table1.SimulateGame(bets1, amounts1)
+# print(table1.SimulateGame(bets1, amounts1))
+# print(table1.SimulateGame(bets1, amounts1))
 #
 # # Craps Simulations
 # table2 = Craps.Craps(50)
@@ -56,7 +56,7 @@ class Craps_90gain(object):
         result_S = []
         def RollTheDices(bets):
             randoms = random.randrange(2, 13)
-            print(randoms)
+            print(" dices " +str(randoms))
             for i in bets:
                 if i != randoms:
                     result_S.append(0)
@@ -94,7 +94,7 @@ class Craps_90gain(object):
                 result4.append(0)
         result_full = np.array(result4) * np.array(amounts)  # list of the amounts in dollars won by the casino
         result_final = [sum(result_full), lost_bets.tolist()]
-        print(result_final)  # list of the full lost and gains from the customers and casino :
+        #print(result_final)  # list of the full lost and gains from the customers and casino :
         return result_final
 
 # table3 = Craps_90gain(0)
