@@ -47,15 +47,15 @@ class CASINO(object):
         minimum_roulette = [50, 100, 200]
         minimum_craps = [0, 25, 50]
 
-
         # Roulette min same for 2 tables
         table1_min = random.choice(minimum_roulette)
         # Craps min same for 2 tables
         table3_min = random.choice(minimum_craps)
 
+        min_list = [random.choice(minimum_roulette),random.choice(minimum_roulette),random.choice(minimum_craps),
+               random.choice(minimum_craps)]
+        print(min_list)
 
-        print(table1_min)
-        print(table3_min)
 
         j = 0
         loop_amount = []
@@ -63,12 +63,8 @@ class CASINO(object):
         # loop to create their amount betted of the players
         for group in customers_dict2:
             for i in customers_dict2[j].keys():
-                if j <= 1:
-                    min = table1_min
-                else:
-                    min = table3_min
                 if i <= self.per_returning:
-                    loop_amount.append(min)
+                    loop_amount.append(min_list[j])
                 elif i > self.per_returning and i < self.per_bachelors:
                     loop_amount.append(random.randint(0, customers_dict2[j].get(i)+1))
                 else :
@@ -93,26 +89,17 @@ class CASINO(object):
         print(bets)
 
         g = 0
-        amounts_players_game1 = []
-        amounts_casino_game1 = []
         amounts_game1 = []
-        loop_amounts_game1 = []
-
-        for g in range(4):
-            if g <= 1:
-                table = Roulette.Roulette(table1_min)
-                table.SimulateGame(bets[g], amounts[g])
+        loop_amounts =[]
+        for g in range(len(customers_dict2) ):
+            if g <= int(len(customers_dict2) / 2 - 1):
+                table = Roulette.Roulette(min_list[g])
+                loop_amounts.append(table.SimulateGame(bets[g], amounts[g]))
             else:
-                table = Simulation.Craps_90gain(table3_min)
-                table.SimulateGame(bets[g], amounts[g])
-
-            amounts_game1.append(table.SimulateGame(bets[g], amounts[g]))
-        g+=1
-
-        #amounts_players_game1.append(table.SimulateGame(bets[g], amounts[g])[1])
-        #amounts_casino_game1.append(table.SimulateGame(bets[g], amounts[g])[0])
+                table = Simulation.Craps_90gain(min_list[g])
+                loop_amounts.append(table.SimulateGame(bets[g], amounts[g]))
+        amounts_game1.append(loop_amounts)
+        amounts_game1 = amounts_game1[0]
         print(amounts_game1)
-        # print(amounts_players_game1)
-        # print(amounts_casino_game1)
 
-CASINO(500, 2, 3, 3, 200, 20, 5, 2).SimulateEvening(1)
+CASINO(500, 2, 3, 3, 200, 20, 10, 2).SimulateEvening(1)

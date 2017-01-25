@@ -19,9 +19,9 @@ class Craps(object):
         result_S = []
         #print(result)
         def RollTheDices(bets):
-            randoms = random.randrange(1, 13)
+            randoms = random.randint(1, 6) + random.randint(1, 6)
             #print("Throwing the dices...")
-            #print("the sum of the dices is equal to " + str(randoms))
+            print("the sum of the dices is equal to " + str(randoms))
             for i in bets:
                 if i != randoms:
                     result_S.append(0)

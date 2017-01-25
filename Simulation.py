@@ -16,13 +16,13 @@ amounts1 = [10, 85, 120, 65, 150, 122]
 # table1 = Roulette.Roulette(100)
 # print(table1.SimulateGame(bets1, amounts1))
 # print(table1.SimulateGame(bets1, amounts1))
-#
+# #
 # # Craps Simulations
 # table2 = Craps.Craps(50)
-# table2.SimulateGame(bets2, amounts1)
-# table2.SimulateGame(bets2, amounts1)
-
-
+# print(table2.SimulateGame(bets2, amounts1))
+# print(table2.SimulateGame(bets2, amounts1))
+#
+#
 # def dice(n):
 #     rolls = []
 #     for i in range(n):
@@ -55,7 +55,7 @@ class Craps_90gain(object):
         result_amount = np.array(result) * np.array(amounts)
         result_S = []
         def RollTheDices(bets):
-            randoms = random.randrange(2, 13)
+            randoms = random.randint(1, 6) + random.randint(1, 6)
             print(" dices " +str(randoms))
             for i in bets:
                 if i != randoms:
