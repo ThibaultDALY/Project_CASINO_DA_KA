@@ -46,22 +46,15 @@ class CASINO(object):
 
         minimum_roulette = [50, 100, 200]
         minimum_craps = [0, 25, 50]
-
-        print(customers_dict2[0].keys())
-
         # Roulette
         table1_min = random.choice(minimum_roulette)
         table1 = Roulette.Roulette(random.choice(minimum_roulette))
         print(table1_min)
 
-        # print(self.per_returning)
-        # print(customers_dict2[0].values())
-        # print(customers_dict2[0].get(12))
-        print(customers_dict2[0])
         j = 0
         amounts = []
+        result = []
         for group in customers_dict2:
-
             for i in customers_dict2[j].keys():
                 if i <= self.per_returning:
                     amounts.append(table1_min)
@@ -69,7 +62,9 @@ class CASINO(object):
                     amounts.append(random.randint(0, customers_dict2[j].get(i)+1))
                 else :
                     amounts.append(random.randint(0, int(customers_dict2[j].get(i)/3)+1))
-        print([[amounts]])
+            result.append(amounts[j*5:5+5*j])
+            j += 1
+        print(result)
 
         # bets1 = random.sample(range(1,37),5)
         # print(bets1)
