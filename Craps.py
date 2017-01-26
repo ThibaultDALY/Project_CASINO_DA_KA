@@ -34,20 +34,37 @@ class Craps(object):
             #     print("No winners this round")
             return result_S
         RollTheDices(bets)
+        def Cote(bets):
+            cote = []
+            for i in bets:
+                if i == 2 or i == 12:
+                    cote.append(35)
+                elif i == 3 or i == 11:
+                    cote.append(17)
+                elif i == 4 or i == 10:
+                    cote.append(11)
+                elif i == 5 or i == 9:
+                    cote.append(8)
+                elif i == 6 or i == 8:
+                    cote.append(7.2)
+                else:
+                    cote.append(5)
+            #print(cote)
+            return cote
         #print(result_S)
         for k in result_S:
             result_amount2 = np.array(result_S) * np.array(result_amount)
-            lost_bets = [item * 9 for item in result_amount2]
+        lost_bets =np.array(result_amount2) * np.array(Cote(bets))
         result4 = []
+        # print("lost bets" +str(lost_bets))
         for w in lost_bets:
             if w == 0:
                 result4.append(1)
             else:
                 result4.append(0)
-        # print(result4) # list of the amounts won by the casino as dummies !
         result_full = np.array(result4) * np.array(amounts)  # list of the amounts in dollars won by the casino
-        result_final = [sum(result_full), lost_bets]
-        #print(result_final)  # list of the full lost and gains from the customers and casino :
+        result_final = [sum(result_full), lost_bets.tolist()]
+        # print(result_final)  # list of the full lost and gains from the customers and casino :
         return result_final
 
 
