@@ -48,3 +48,18 @@
 # a = [dict(table1), dict(table2)]
 # print(a[0])
 
+
+
+
+
+
+
+
+
+dict = {dictionary}
+for i in range(4) :
+    def fun(dict):
+        ...
+        return result
+    fun(dict)
+print(result)
