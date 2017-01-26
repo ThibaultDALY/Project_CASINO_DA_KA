@@ -37,6 +37,7 @@ class CASINO(object):
         customers_dict = dict(customers_dict)
         print(customers_dict)
 
+        # creating a function that will run a game on each table and have a dictionary as an output
         def Evening(customers_dict):
             customers_dict_int = []
             i = 0
@@ -189,6 +190,7 @@ class CASINO(object):
             # print(customers_dict2)
             # print(customers_dict4) # Here is the income of each player after the game 1 !!
 
+
             """ Let's now keep only players with income > 0 after the game 1 """
 
             # Here is the final list of income for each player
@@ -215,9 +217,27 @@ class CASINO(object):
                 return d
 
             player_game1 = reduce(update, player_game1_int, {})
-            # print(player_game1)
+            print(player_game1.values())
+
+            """ Drink time """
+            # need less then 2 drinks
+            for keys in player_game1:
+                get_a_drink = random.randint(1,2)
+                get_a_bartender = random.randint(1,2)
+                if player_game1[keys] > 60:
+                    if get_a_drink == 1:
+                        if get_a_bartender == 1:
+                            player_game1[keys] = player_game1[keys]-(20+random.randint(0,20))
+                        else:
+                            pass
+                    else:
+                        pass
+                else:
+                    pass
+            print(player_game1)
             return player_game1
-        Evening(customers_dict)
+        # 3 games per night
         Evening(Evening(Evening(customers_dict)))
+
 
 CASINO(500, 2, 2, 3, 200, 15, 10, 2).SimulateEvening(1)
