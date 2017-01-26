@@ -5,7 +5,7 @@ import decimal
 import itertools
 from random import shuffle
 import Simulation
-random.seed(4)
+#random.seed(6)
 class CASINO(object):
     def __init__(self, cash, roulette_tables, craps_tables, barmen, employee_wage, number_customers,
                  per_returning, per_bachelors):
@@ -70,7 +70,7 @@ class CASINO(object):
         amounts = []
         for group in range(len(customers_dict2)):
             loop_amount = []
-            for player in range(0, 5):
+            for player in range(len(customers_dict2[group])):
                 if customers_dict2[group][player][0] <= self.per_returning :
                     if customers_dict2[group][player][1]>= min_list[group]:
                         loop_amount.append(min_list[group])
@@ -88,7 +88,7 @@ class CASINO(object):
         bets = []
         for group in range(len(customers_dict2)):
             loop_bets = []
-            for player in range(0, 5):
+            for player in range(len(customers_dict2[group])):
                 if group <= 1:
                     loop_bets.append(random.randint(1, 36))
                 else:
@@ -154,12 +154,20 @@ class CASINO(object):
         customers_dict4 = []
         for group in range(len(customers_dict2)):
             loop_dico = []
-            for player in range(0, 5):
+            for player in range(len(customers_dict2[group])):
                 loop_dico.append(replace_at_index1(customers_dict3[group][player],1,income_game1[group][player]))
             customers_dict4.append(loop_dico)
 
         print(amounts)
         print(customers_dict2)
         print(customers_dict4) # Here is the income of each player after the game 1 !!
+
+        for group in range(len(customers_dict2)):
+            for player in range(len(customers_dict2[group])):
+                if customers_dict4[group][player][1] == 0:
+                    customers_dict4[group][player].pop()
+                else:
+                    break
+        print(customers_dict4)
 
 CASINO(500, 2, 3, 3, 200, 20, 10, 2).SimulateEvening(1)

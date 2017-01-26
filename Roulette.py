@@ -41,7 +41,7 @@ class Roulette(object):
             return result_S
         SpinTheWheel(bets)
         #print(result_S) # list of bets that are winners as dummies !
-        # computation on the amount lost and won by palyers and the casino
+        # computation on the amount lost and won by players and the casino
         for k in result_S:
             result_amount2 = np.array(result_S)* np.array(result_amount)
             lost_bets= [item*30 for item in result_amount2]
