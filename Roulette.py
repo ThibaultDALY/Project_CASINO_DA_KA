@@ -27,7 +27,7 @@ class Roulette(object):
         def SpinTheWheel(bets):
             randoms = random.randint(0,37)
             #print("Spinning the Wheel...")
-            print("Ball lands on Roulette " + str(randoms))
+            #print("Ball lands on Roulette " + str(randoms))
             for i in bets:
                 if i != randoms:
                     result_S.append(0)
