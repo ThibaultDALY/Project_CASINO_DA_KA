@@ -53,3 +53,15 @@ print(range(0,3))
 for i in range(3):
     if i==0:
 
+        # Evening.croupiers_gain3 = []
+        # Evening_croupiers_loop = []
+        # for i in range(1):
+        #     if i == 0:
+        #         Evening(Evening(customers_dict))
+        #         Evening_croupiers_loop.append(Evening.croupiers_gain)
+        #         player_game2 = Evening(Evening(customers_dict))
+        #     else :
+        #         Evening(player_game2)
+        #         Evening_croupiers_loop.append(Evening.croupiers_gain)
+        #     Evening.croupiers_gain3.append(Evening_croupiers_loop)
+        # print(Evening.croupiers_gain3)
