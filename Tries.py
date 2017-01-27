@@ -49,17 +49,7 @@
 # print(a[0])
 
 
+print(range(0,3))
+for i in range(3):
+    if i==0:
 
-
-
-
-
-
-
-dict = {dictionary}
-for i in range(4) :
-    def fun(dict):
-        ...
-        return result
-    fun(dict)
-print(result)

@@ -58,8 +58,7 @@ class CASINO(object):
                             customers_dict = dict(set(customers_dict.items()) - set(customers_dict_int[j].items()))
                         j += 1
                 i += 1
-            # print(customers_dict_int)
-            #
+
             """ Make the set of players more easy to manipulate """
 
             # A function sort a dictionary
@@ -80,9 +79,6 @@ class CASINO(object):
             number_craps = random.randint(round(len(customers_dict2) / 2), round(len(customers_dict2) / 2) + 1)
             number_roulette = int(len(customers_dict2) - number_craps)
 
-            # print(number_craps)
-            # print(number_roulette)
-
             min_list = []
             for group in range(len(customers_dict2)):
                 if group <= number_roulette:
@@ -101,14 +97,13 @@ class CASINO(object):
                             loop_amount.append(min_list[group])
                         else:
                             loop_amount.append(0)
-                    elif customers_dict2[group][player][0] > self.per_returning and customers_dict2[group][player][0] <= \
-                            (self.number_customers - self.per_bachelors):
+                    elif customers_dict2[group][player][0] > self.per_returning and customers_dict2[group][player][0] \
+                        <= (self.number_customers - self.per_bachelors):
                         loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 3))))
                     else:
                         loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 1))))
                 amounts.append(loop_amount)
             print("money betted by players" +str(amounts))
-
             """ Create the random bet chosen by each player """
             bets = []
             for group in range(len(customers_dict2)):
@@ -120,7 +115,6 @@ class CASINO(object):
                         loop_bets.append(random.randint(2, 12))
                 bets.append(loop_bets)
             # print(bets)
-
             """ Run the first round of game for each table """
 
             amounts_game1 = []
@@ -133,7 +127,6 @@ class CASINO(object):
                     table = Craps.Craps(min_list[group])
                     loop_game1.append(table.SimulateGame(bets[group], amounts[group]))
                 amounts_game1.append(loop_game1)
-
             # print(amounts_game1)
 
             """ Store the result of the Stage 1 """
@@ -175,9 +168,7 @@ class CASINO(object):
                     arr = arr[size:]
                 arrs.append(arr)
                 return arrs
-
             income_game1 = split(income_game1, 5)
-
             # print(income_game1)
 
             # Create a function to replace an element in a list
@@ -192,11 +183,9 @@ class CASINO(object):
                 for player in range(len(customers_dict2[group])):
                     loop_dico.append(replace_at_index1(customers_dict3[group][player], 1, income_game1[group][player]))
                 customers_dict4.append(loop_dico)
-
             # print(amounts)
             # print(customers_dict2)
             # print(customers_dict4) # Here is the income of each player after the game 1 !!
-
 
             """ Let's now keep only players with income > 0 after the game 1 """
 
@@ -206,26 +195,21 @@ class CASINO(object):
                 customers_dict5.append([i for i in group if i[1] > 0])
             #print(customers_dict5)
 
-            #
             Bal = []
             for group in customers_dict5:
                 Bal.append(dict(group))
-            # print(Bal)
 
             # Re-transform the output into dico form
             player_game1_int = []
             for group in customers_dict5:
                 player_game1_int.append(dict(group))
-            # print(player_game1_int)
 
             # Transform the different dico in a unique dictionary
             from functools import reduce
             def update(d, other):
                 d.update(other)
                 return d
-
             player_game1 = reduce(update, player_game1_int, {})
-            #print(player_game1.values())
 
             """ Drink time """
             # need less then 2 drinks
@@ -250,9 +234,16 @@ class CASINO(object):
             print("tip bar " +str(tips))
             print("money drinks " +str(sum(casino_money_drink)))
             print(player_game1)
+
             return player_game1
+
         # 3 games per night
+        for i range(1):
+            if i==0:
+                Evening(Evening(customers_dict))
+            else :
         Evening(Evening(Evening(customers_dict)))
+
         print(Evening.croupiers_gain)
 
 CASINO(500, 2, 2, 3, 200, 16, 10, 2).SimulateEvening(1)
