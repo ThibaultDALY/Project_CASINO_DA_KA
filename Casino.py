@@ -107,7 +107,7 @@ class CASINO(object):
                     else:
                         loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 1))))
                 amounts.append(loop_amount)
-            # print(amounts)
+            print("money betted by players" +str(amounts))
 
             """ Create the random bet chosen by each player """
             bets = []
@@ -145,9 +145,16 @@ class CASINO(object):
                 casino_gain1.append(amounts_game1[game][0][0])
 
             casino_gain1 = casino_gain1
-            print(player_gain1)
-            print(casino_gain1)
+            print( "money won by players" +str(player_gain1))
+            print("money won by teh casino" +str(casino_gain1))
 
+            """ Money the croupiers win 0.5% """
+
+            Evening.croupiers_gain = []
+            Evening.croupiers_gain3 = []
+            for croupier in range(number_roulette+number_craps):
+                Evening.croupiers_gain.append(casino_gain1[croupier]*0.05)
+            print("money croupier wins "+str(sum(Evening.croupiers_gain)))
             """ Let's now compute the revenue of each players after game 1 : delete the amount betted and add potential
                 payoff from Game 1"""
 
@@ -186,7 +193,7 @@ class CASINO(object):
                     loop_dico.append(replace_at_index1(customers_dict3[group][player], 1, income_game1[group][player]))
                 customers_dict4.append(loop_dico)
 
-            print(amounts)
+            # print(amounts)
             # print(customers_dict2)
             # print(customers_dict4) # Here is the income of each player after the game 1 !!
 
@@ -197,7 +204,8 @@ class CASINO(object):
             customers_dict5 = []
             for group in customers_dict4:
                 customers_dict5.append([i for i in group if i[1] > 0])
-            print(customers_dict5)
+            #print(customers_dict5)
+
             #
             Bal = []
             for group in customers_dict5:
@@ -217,27 +225,34 @@ class CASINO(object):
                 return d
 
             player_game1 = reduce(update, player_game1_int, {})
-            print(player_game1.values())
+            #print(player_game1.values())
 
             """ Drink time """
             # need less then 2 drinks
+            casino_money_drink = []
+            tips = 0
             for keys in player_game1:
                 get_a_drink = random.randint(1,2)
                 get_a_bartender = random.randint(1,2)
                 if player_game1[keys] > 60:
                     if get_a_drink == 1:
                         if get_a_bartender == 1:
-                            player_game1[keys] = player_game1[keys]-(20+random.randint(0,20))
+                            tips = random.randint(0, 20)
+                            casino_money_drink.append(20)
+                            player_game1[keys] = player_game1[keys]-(20+tips)
                         else:
                             pass
                     else:
                         pass
                 else:
                     pass
+            # money made by the casino from drinks
+            print("tip bar " +str(tips))
+            print("money drinks " +str(sum(casino_money_drink)))
             print(player_game1)
             return player_game1
         # 3 games per night
         Evening(Evening(Evening(customers_dict)))
+        print(Evening.croupiers_gain)
 
-
-CASINO(500, 2, 2, 3, 200, 15, 10, 2).SimulateEvening(1)
+CASINO(500, 2, 2, 3, 200, 16, 10, 2).SimulateEvening(1)
