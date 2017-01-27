@@ -56,10 +56,17 @@ class CASINO(object):
                             customers_dict_int.append(dict(random.sample(customers_dict.items(), 5)))
                             customers_dict = dict(set(customers_dict.items()) - set(customers_dict_int[j].items()))
                         else:
-                            customers_dict_int.append(dict(random.sample(customers_dict.items(), len(customers_dict) % 5)))
+                            customers_dict_int.append(dict(random.sample(customers_dict.items(), len(customers_dict)\
+                                                                         % 5)))
                             customers_dict = dict(set(customers_dict.items()) - set(customers_dict_int[j].items()))
                         j += 1
                 i += 1
+            # print(customers_dict_int)
+
+            # tables_empty = ([{}]*(self.roulette_tables+self.craps_tables))
+            # for x in customers_dict:
+            #     tables_empty.insert(random.randint(0, len(tables_empty)),x)
+            # print(tables_empty)
 
             """ Make the set of players more easy to manipulate """
 
@@ -144,7 +151,7 @@ class CASINO(object):
             #print( "money won by players" +str(player_gain1))
             #print("money casino " +str(casino_gain1))
 
-            """ Money the croupiers win 0.5% """
+            """ Money the croupiers wins 0.5% """
 
             croupiers_gain = []
             for croupier in range(number_roulette + number_craps):
@@ -179,38 +186,23 @@ class CASINO(object):
             #print("tip bar " +str(tips))
             #print("money drinks " +str(sum(casino_money_drink)))
             #print(player_game1)
-            return player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink), sum(tips_all)
+            result_final = [player_game1, casino_gain1, player_gain1, croupiers_gain, casino_money_drink, tips_all]
+            return result_final
 
-        # print(Evening(customers_dict)[1])
-        # print(Evening(Evening(customers_dict)[0])[1])
-        # print(Evening(Evening(Evening(customers_dict)[0])[0])[1])
-        # print(Evening(customers_dict)[2])
-        # print(Evening(Evening(customers_dict)[0])[2])
+        """ Result of the night """
+
+        for section in range(1,3):
+            A = Evening(customers_dict)
+            print(A[section])
+            B = Evening(A[0])
+            print(B[section])
+            C = Evening(B[0])
+            print(C[section])
+            E = sum(np.array(A[section])+np.array(B[section])+np.array(C[section]))
+        print(E)
+
         # 3 games per night
         #Evening(Evening(Evening(customers_dict)[0])[0])
 
-        """ Result of the night """
-        # result_players_left = zip(Evening(customers_dict)[0], Evening(Evening(customers_dict)[0])[0], \
-        #                          Evening(Evening(Evening(customers_dict)[0])[0])[0])
-        # print([sum(item) for item in result_players_left])
-
-        result_casino_gain = zip(Evening(customers_dict)[1], Evening(Evening(customers_dict)[0])[1], \
-                Evening(Evening(Evening(customers_dict)[0])[0])[1])
-        print("casino "+str([sum(item) for item in result_casino_gain]))
-
-        result_croupiers_gain = zip(Evening(customers_dict)[3], Evening(Evening(customers_dict)[0])[3], \
-                Evening(Evening(Evening(customers_dict)[0])[0])[3])
-        print("croupiers "+str([sum(item) for item in result_croupiers_gain]))
-
-        result_drinks_gain = Evening(customers_dict)[4]+Evening(Evening(customers_dict)[0])[4] + \
-                                    Evening(Evening(Evening(customers_dict)[0])[0])[4]
-        print("drinks "+str(result_drinks_gain))
-
-        result_tips_gain = Evening(customers_dict)[5]+Evening(Evening(customers_dict)[0])[5] + \
-                                    Evening(Evening(Evening(customers_dict)[0])[0])[5]
-        print("tips "+str(result_tips_gain))
-
-        # print([x+y for x,y in zip(Evening(customers_dict)[1], Evening(Evening(customers_dict)[0])[1])])
-        # print([x+y for x,y in zip(Evening(customers_dict)[2], Evening(Evening(customers_dict)[0])[2])])
 
 CASINO(500, 2, 2, 3, 200, 16, 10, 2).SimulateEvening(1)

@@ -56,3 +56,4 @@ class Roulette(object):
         result_final=[sum(result_full),lost_bets]
         #print(result_final) # list of the full lost and gains from the customers and casino :
         return result_final
+
