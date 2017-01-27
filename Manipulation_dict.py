@@ -1,8 +1,6 @@
 """ Let's now compute the revenue of each players after game 1 : delete the amount betted and add potential
                 payoff from Game 1"""
 
-
-
 def Change(customers_dict2, player_gain1, amounts ):
     customers_dict3 = customers_dict2
     income_game1 = []  # Here are the income of each player after game 1

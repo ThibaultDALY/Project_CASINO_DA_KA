@@ -3,9 +3,11 @@ import Roulette
 import Craps
 import decimal
 import itertools
+import Manipulation_dict
+import numpy as np
 from random import shuffle
 import Simulation
-#random.seed(6)
+random.seed(7)
 
 class CASINO(object):
     def __init__(self, cash, roulette_tables, craps_tables, barmen, employee_wage, number_customers,
@@ -140,90 +142,23 @@ class CASINO(object):
 
             casino_gain1 = casino_gain1
             #print( "money won by players" +str(player_gain1))
-            print("money won by the casino" +str(casino_gain1))
+            #print("money casino " +str(casino_gain1))
 
             """ Money the croupiers win 0.5% """
 
             croupiers_gain = []
-            def moneycroupier(casino_gain1):
-                for croupier in range(number_roulette+number_craps):
-                    croupiers_gain.append(casino_gain1[croupier]*0.05)
-                return croupiers_gain
-            moneycroupier(casino_gain1)
-                #print("money croupier wins "+str(sum(Evening.croupiers_gain)))
+            for croupier in range(number_roulette + number_craps):
+                croupiers_gain.append(round(casino_gain1[croupier] * 0.05))
 
-            import Manipulation_dict
-
+            # doing some manipulation on the list for winning and loosing money of the players
             Manipulation_dict.Change(customers_dict2,player_gain1,amounts)
             player_game1 = Manipulation_dict.Change(customers_dict2,player_gain1,amounts)
-
-            # """ Let's now compute the revenue of each players after game 1 : delete the amount betted and add potential
-            #     payoff from Game 1"""
-            #
-            # customers_dict3 = customers_dict2
-            #
-            # income_game1 = []  # Here are the income of each player after game 1
-            # for group in range(len(customers_dict2)):
-            #     for player in range(len(customers_dict2[group])):
-            #         income_game1.append(customers_dict3[group][player][1] - amounts[group][player] + \
-            #                             player_gain1[group][player])
-            #
-            # # Create a function to split list
-            # def split(arr, size):
-            #     arrs = []
-            #     while len(arr) > size:
-            #         pice = arr[:size]
-            #         arrs.append(pice)
-            #         arr = arr[size:]
-            #     arrs.append(arr)
-            #     return arrs
-            # income_game1 = split(income_game1, 5)
-            # # print(income_game1)
-            #
-            # # Create a function to replace an element in a list
-            # def replace_at_index1(tup, ix, val):
-            #     lst = list(tup)
-            #     lst[ix] = val
-            #     return tuple(lst)
-            #
-            # customers_dict4 = []
-            # for group in range(len(customers_dict2)):
-            #     loop_dico = []
-            #     for player in range(len(customers_dict2[group])):
-            #         loop_dico.append(replace_at_index1(customers_dict3[group][player], 1, income_game1[group][player]))
-            #     customers_dict4.append(loop_dico)
-            # # print(amounts)
-            # # print(customers_dict2)
-            # # print(customers_dict4) # Here is the income of each player after the game 1 !!
-            #
-            # """ Let's now keep only players with income > 0 after the game 1 """
-            #
-            # # Here is the final list of income for each player
-            # customers_dict5 = []
-            # for group in customers_dict4:
-            #     customers_dict5.append([i for i in group if i[1] > 0])
-            # #print(customers_dict5)
-            #
-            # Bal = []
-            # for group in customers_dict5:
-            #     Bal.append(dict(group))
-            #
-            # # Re-transform the output into dico form
-            # player_game1_int = []
-            # for group in customers_dict5:
-            #     player_game1_int.append(dict(group))
-            #
-            # # Transform the different dico in a unique dictionary
-            # from functools import reduce
-            # def update(d, other):
-            #     d.update(other)
-            #     return d
-            # player_game1 = reduce(update, player_game1_int, {})
 
             """ Drink time """
             # need less then 2 drinks
             casino_money_drink = []
             tips = 0
+            tips_all = []
             for keys in player_game1:
                 get_a_drink = random.randint(1,2)
                 get_a_bartender = random.randint(1,2)
@@ -231,6 +166,7 @@ class CASINO(object):
                     if get_a_drink == 1:
                         if get_a_bartender == 1:
                             tips = random.randint(0, 20)
+                            tips_all.append(tips)
                             casino_money_drink.append(20)
                             player_game1[keys] = player_game1[keys]-(20+tips)
                         else:
@@ -242,12 +178,39 @@ class CASINO(object):
             # money made by the casino from drinks
             #print("tip bar " +str(tips))
             #print("money drinks " +str(sum(casino_money_drink)))
-            print(player_game1)
-            return player_game1
+            #print(player_game1)
+            return player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink), sum(tips_all)
 
+        # print(Evening(customers_dict)[1])
+        # print(Evening(Evening(customers_dict)[0])[1])
+        # print(Evening(Evening(Evening(customers_dict)[0])[0])[1])
+        # print(Evening(customers_dict)[2])
+        # print(Evening(Evening(customers_dict)[0])[2])
         # 3 games per night
-        Evening(Evening(Evening(customers_dict)))
+        #Evening(Evening(Evening(customers_dict)[0])[0])
 
-        print()
+        """ Result of the night """
+        # result_players_left = zip(Evening(customers_dict)[0], Evening(Evening(customers_dict)[0])[0], \
+        #                          Evening(Evening(Evening(customers_dict)[0])[0])[0])
+        # print([sum(item) for item in result_players_left])
+
+        result_casino_gain = zip(Evening(customers_dict)[1], Evening(Evening(customers_dict)[0])[1], \
+                Evening(Evening(Evening(customers_dict)[0])[0])[1])
+        print("casino "+str([sum(item) for item in result_casino_gain]))
+
+        result_croupiers_gain = zip(Evening(customers_dict)[3], Evening(Evening(customers_dict)[0])[3], \
+                Evening(Evening(Evening(customers_dict)[0])[0])[3])
+        print("croupiers "+str([sum(item) for item in result_croupiers_gain]))
+
+        result_drinks_gain = Evening(customers_dict)[4]+Evening(Evening(customers_dict)[0])[4] + \
+                                    Evening(Evening(Evening(customers_dict)[0])[0])[4]
+        print("drinks "+str(result_drinks_gain))
+
+        result_tips_gain = Evening(customers_dict)[5]+Evening(Evening(customers_dict)[0])[5] + \
+                                    Evening(Evening(Evening(customers_dict)[0])[0])[5]
+        print("tips "+str(result_tips_gain))
+
+        # print([x+y for x,y in zip(Evening(customers_dict)[1], Evening(Evening(customers_dict)[0])[1])])
+        # print([x+y for x,y in zip(Evening(customers_dict)[2], Evening(Evening(customers_dict)[0])[2])])
 
 CASINO(500, 2, 2, 3, 200, 16, 10, 2).SimulateEvening(1)
