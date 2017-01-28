@@ -11,7 +11,7 @@ import Simulation
 import operator
 from collections import Counter
 from matplotlib import pyplot as plt
-random.seed(7)
+# random.seed(7)
 
 class CASINO(object):
     def __init__(self, cash, roulette_tables, craps_tables, barmen, employee_wage, number_customers,
@@ -46,34 +46,44 @@ class CASINO(object):
                 list_id.append(i)
             customers_dict = zip(list_id, customers_merged)
             customers_dict = dict(customers_dict)
-            #print(customers_dict)
+            print(customers_dict)
 
             # creating a function that will run a game on each table and have a dictionary as an output
             def Evening(customers_dict):
-
                 def sortByKey(dict):
                     sortedByKeyDict = sorted(dict.items(), key=lambda t: t[0])
                     return sortedByKeyDict
 
                 customers_dict0 = sortByKey(customers_dict)
-                #print(customers_dict0)
-                customers_dict_int = Table_repartition.table_repartition(customers_dict0, self.craps_tables+\
-                                                                         self.roulette_tables,customers_dict0)
-                repartition2 = customers_dict_int[1]
+                nb = len(customers_dict0)
+
+                customers_dict_int = Table_repartition.table_repartition(customers_dict0, self.craps_tables+self.roulette_tables, nb_player_round_i=len(customers_dict0))
+                repartition2 = customers_dict_int[2]
+
+
+                customers_dict00 = customers_dict_int[0]
+                # print(customers_dict00)
+                #
+
+
                 customers_dict_int2 = []
-                for group in customers_dict_int[0]:
+                for group in customers_dict00:
                     customers_dict_int2.append(dict(group))
+                #print(customers_dict_int2)
+
 
                 customers_dict2 = []
                 for group in customers_dict_int2:
                     customers_dict2.append(sortByKey(group))
                 #print(customers_dict2)
 
+
                 """ Create the random minimum for the each game """
 
+                number_roulette = random.randint(round(len(customers_dict_int[2])/2)-1,round(len(customers_dict_int[2])/2)+2)
                 min_list = []
                 for group in range(len(customers_dict2)):
-                    if group <= self.roulette_tables:
+                    if group <= number_roulette:
                         min_list.append(random.choice([50, 100, 200]))
                     else:
                         min_list.append(random.choice([0, 25, 50]))
@@ -89,38 +99,38 @@ class CASINO(object):
                                 loop_amount.append(min_list[group])
                             else:
                                 loop_amount.append(0)
-                        elif customers_dict2[group][player][0] > self.per_returning and customers_dict2[group][player]\
-                                [0] <= (self.number_customers - self.per_bachelors):
+                        elif customers_dict2[group][player][0] > self.per_returning and customers_dict2[group][player][0] \
+                            <= (self.number_customers - self.per_bachelors):
                             loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 3))))
                         else:
                             loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 1))))
                     amounts.append(loop_amount)
-                #print(amounts)
+                #print("money betted by players" +str(amounts))
 
                 """ Create the random bet chosen by each player """
                 bets = []
                 for group in range(len(customers_dict2)):
                     loop_bets = []
                     for player in range(len(customers_dict2[group])):
-                        if group <= 1:
+                        if group <= number_roulette:
                             loop_bets.append(random.randint(1, 36))
                         else:
                             loop_bets.append(random.randint(2, 12))
                     bets.append(loop_bets)
-                # print(bets)
+                #print(bets)
                 """ Run the first round of game for each table """
-                #
+
                 amounts_game1 = []
                 for group in range(len(customers_dict2)):
                     loop_game1 = []
-                    if group <= 1:
+                    if group <= number_roulette:
                         table = Roulette.Roulette(min_list[group])
                         loop_game1.append(table.SimulateGame(bets[group], amounts[group]))
                     else:
                         table = Craps.Craps(min_list[group])
                         loop_game1.append(table.SimulateGame(bets[group], amounts[group]))
                     amounts_game1.append(loop_game1)
-                # print(amounts_game1)
+                #print(amounts_game1)
 
                 """ Store the result of the Stage 1 """
 
@@ -131,20 +141,25 @@ class CASINO(object):
                     casino_gain1.append(amounts_game1[game][0][0])
 
                 casino_gain1 = casino_gain1
-                #print(player_gain1)
-                #print(casino_gain1)
+                # print( "money won by players" +str(player_gain1))
+                # print("money casino " +str(casino_gain1))
 
                 """ Money the croupiers wins 0.5% """
 
                 croupiers_gain = []
-                for croupier in range(self.roulette_tables + self.craps_tables):
+                # for croupier in range(self.roulette_tables + self.craps_tables):
+                for croupier in range(len(customers_dict2)):
                     croupiers_gain.append(round(casino_gain1[croupier] * 0.05))
 
                 # doing some manipulation on the list for winning and loosing money of the players
-                Manipulation_dict.Change(customers_dict2, player_gain1, amounts,repartition2)
-                player_game1 = Manipulation_dict.Change(customers_dict2, player_gain1, amounts,repartition2)
+                # Manipulation_dict.Change(customers_dict2, player_gain1, amounts,repartition2)
+                player_game1 = Manipulation_dict.Change(customers_dict2, player_gain1, amounts, repartition2)
+
+                #print(player_game1)
+
 
                 """ Drink time """
+                # need less then 2 drinks
                 casino_money_drink = []
                 tips = 0
                 tips_all = []
@@ -164,28 +179,29 @@ class CASINO(object):
                             pass
                     else:
                         pass
-
-                result_final = [player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink),\
-                                tips_all]
+                # money made by the casino from drinks
+                result_final = [player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink), sum(tips_all)]
                 return result_final
 
             Evening(customers_dict)
+
             A = Evening(customers_dict)
-            #print(A[2])
+            # print(A[0])
             B = Evening(A[0])
-            #print(B[2])
+            # print(B[0])
             C = Evening(B[0])
-            #print(C[2])
+            # print(C[0])
 
             """ Casino fees and cash for the night """
 
-            casino_wage_fix = 200 * (self.roulette_tables+self.craps_tables + self.barmen)
-            casino_wage_total = casino_wage_fix + sum(A[3]+B[3]+C[3])
+            casino_wage_fix = 200 * (self.roulette_tables + self.craps_tables + self.barmen)
+            casino_wage_total = casino_wage_fix + sum(A[3] + B[3] + C[3])
             casino_lost = sum(list(map(sum, A[2]))) + sum(list(map(sum, B[2]))) + sum(list(map(sum, C[2])))
-            casino_drink_night = A[4]+B[4]+C[4]
-            barmen_tips = A[5]+B[5]+C[5]
+            casino_drink_night = A[4] + B[4] + C[4]
+            barmen_tips = A[5] + B[5] + C[5]
             barmen_tips_loop.append(np.mean(barmen_tips))
-            #print(np.mean(barmen_tips))
+
+            # print(np.mean(barmen_tips))
             if number_of_evenings != 0:
                 self.cash = casino_money
                 loop_nights.append(self.cash)
@@ -197,18 +213,17 @@ class CASINO(object):
                 casino_money = self.cash + casino_drink_night + sum(
                     A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
                 loop_nights.append(casino_money)
-            print("the casino has "+str(casino_money),"$ after the night" , "with a cash start of "+str(self.cash),"$")
+            print("the casino has " + str(casino_money), "$ after the night", "with a cash start of " + str(self.cash), "$")
+
         result_nights.append(loop_nights)
         result_nights = result_nights[0]
         barmen_tips_all.append(barmen_tips_loop)
         barmen_tips_all = barmen_tips_all[0]
         return result_nights, barmen_tips_all
 
-
-
 """ Evolution of the cash of the Casino """
-cash_flow = CASINO(5000, 2, 2,  4, 200, 20, 10, 2).SimulateEvening(5)[0]
-#
+cash_flow = CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(5)[0]
+
 print(cash_flow)
 plt.plot(cash_flow)
 plt.ylabel('Cash of the casino')
@@ -217,13 +232,16 @@ plt.title('Profit of the casino ')
 plt.grid(True)
 plt.show()
 
-""" Average tips by night """
-average_tips = CASINO(5000, 2, 2,  4, 200, 20, 10, 2).SimulateEvening(5)[1]
-plt.plot(average_tips)
-plt.ylabel('Average tips per night')
-plt.xlabel('Evenings')
-plt.title('Tips in dollars ')
-plt.grid(True)
-plt.show()
+# """ Average tips by night """
+# average_tips = CASINO(5000, 2, 2, 4, 200, 20, 10, 2).SimulateEvening(5)[1]
+# plt.plot(average_tips)
+# plt.ylabel('Average tips per night')
+# plt.xlabel('Evenings')
+# plt.title('Tips in dollars ')
+# plt.grid(True)
+# plt.show()
 
 
+
+
+# CASINO(500, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(1)
