@@ -38,15 +38,15 @@ class Craps(object):
             cote = []
             for i in bets:
                 if i == 2 or i == 12:
-                    cote.append(35)
+                    cote.append(30)
                 elif i == 3 or i == 11:
-                    cote.append(17)
+                    cote.append(15)
                 elif i == 4 or i == 10:
-                    cote.append(11)
+                    cote.append(10)
                 elif i == 5 or i == 9:
                     cote.append(8)
                 elif i == 6 or i == 8:
-                    cote.append(7.2)
+                    cote.append(6)
                 else:
                     cote.append(5)
             #print(cote)
