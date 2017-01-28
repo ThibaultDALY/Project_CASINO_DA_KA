@@ -8,7 +8,10 @@ import Table_repartition
 import numpy as np
 from random import shuffle
 import Simulation
-# random.seed(7)
+import operator
+from collections import Counter
+from matplotlib import pyplot as plt
+random.seed(7)
 
 class CASINO(object):
     def __init__(self, cash, roulette_tables, craps_tables, barmen, employee_wage, number_customers,
@@ -24,6 +27,7 @@ class CASINO(object):
 
     def SimulateEvening(self, evenings):
         result_nights = []
+        loop_nights = []
         for number_of_evenings in range(evenings):
 
             customer_returning = random.sample(range(100, 300), self.per_returning)
@@ -40,7 +44,7 @@ class CASINO(object):
                 list_id.append(i)
             customers_dict = zip(list_id, customers_merged)
             customers_dict = dict(customers_dict)
-            print(customers_dict)
+            #print(customers_dict)
 
             # creating a function that will run a game on each table and have a dictionary as an output
             def Evening(customers_dict):
@@ -180,14 +184,23 @@ class CASINO(object):
 
             if number_of_evenings != 0:
                 self.cash = casino_money
+                loop_nights.append(self.cash)
                 casino_money = self.cash + casino_drink_night + sum(
                     A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
+                loop_nights.append(casino_money)
             else:
+                loop_nights.append(self.cash)
                 casino_money = self.cash + casino_drink_night + sum(
                     A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
+                loop_nights.append(casino_money)
             print("the casino has "+str(casino_money),"$ after the night" , "with a cash start of "+str(self.cash),"$")
-        result_nights.append(casino_money)
-
+        result_nights.append(loop_nights)
+        result_nights = result_nights[0]
         return result_nights
 
-CASINO(5000, 2, 2,  4, 200, 19, 10, 2).SimulateEvening(3)
+cash_flow = CASINO(5000, 2, 2,  4, 200, 20, 10, 2).SimulateEvening(30)
+print(cash_flow)
+plt.plot(cash_flow)
+plt.ylabel('Cash of the casino')
+plt.xlim([0,60])
+plt.show()
