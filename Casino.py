@@ -28,6 +28,8 @@ class CASINO(object):
     def SimulateEvening(self, evenings):
         result_nights = []
         loop_nights = []
+        barmen_tips_all = []
+        barmen_tips_loop = []
         for number_of_evenings in range(evenings):
 
             customer_returning = random.sample(range(100, 300), self.per_returning)
@@ -164,7 +166,7 @@ class CASINO(object):
                         pass
 
                 result_final = [player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink),\
-                                sum(tips_all)]
+                                tips_all]
                 return result_final
 
             Evening(customers_dict)
@@ -181,7 +183,9 @@ class CASINO(object):
             casino_wage_total = casino_wage_fix + sum(A[3]+B[3]+C[3])
             casino_lost = sum(list(map(sum, A[2]))) + sum(list(map(sum, B[2]))) + sum(list(map(sum, C[2])))
             casino_drink_night = A[4]+B[4]+C[4]
-
+            barmen_tips = A[5]+B[5]+C[5]
+            barmen_tips_loop.append(np.mean(barmen_tips))
+            #print(np.mean(barmen_tips))
             if number_of_evenings != 0:
                 self.cash = casino_money
                 loop_nights.append(self.cash)
@@ -196,11 +200,30 @@ class CASINO(object):
             print("the casino has "+str(casino_money),"$ after the night" , "with a cash start of "+str(self.cash),"$")
         result_nights.append(loop_nights)
         result_nights = result_nights[0]
-        return result_nights
+        barmen_tips_all.append(barmen_tips_loop)
+        barmen_tips_all = barmen_tips_all[0]
+        return result_nights, barmen_tips_all
 
-cash_flow = CASINO(5000, 2, 2,  4, 200, 20, 10, 2).SimulateEvening(30)
+
+
+""" Evolution of the cash of the Casino """
+cash_flow = CASINO(5000, 2, 2,  4, 200, 20, 10, 2).SimulateEvening(5)[0]
+#
 print(cash_flow)
 plt.plot(cash_flow)
 plt.ylabel('Cash of the casino')
-plt.xlim([0,60])
+plt.xlabel('Evenings')
+plt.title('Profit of the casino ')
+plt.grid(True)
 plt.show()
+
+""" Average tips by night """
+average_tips = CASINO(5000, 2, 2,  4, 200, 20, 10, 2).SimulateEvening(5)[1]
+plt.plot(average_tips)
+plt.ylabel('Average tips per night')
+plt.xlabel('Evenings')
+plt.title('Tips in dollars ')
+plt.grid(True)
+plt.show()
+
+
