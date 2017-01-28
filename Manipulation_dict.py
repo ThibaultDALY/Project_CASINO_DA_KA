@@ -1,7 +1,7 @@
 """ Let's now compute the revenue of each players after game 1 : delete the amount betted and add potential
                 payoff from Game 1"""
 
-def Change(customers_dict2, player_gain1, amounts ):
+def Change(customers_dict2, player_gain1, amounts, repartition):
     customers_dict3 = customers_dict2
     income_game1 = []  # Here are the income of each player after game 1
     for group in range(len(customers_dict2)):
@@ -10,16 +10,21 @@ def Change(customers_dict2, player_gain1, amounts ):
                                 player_gain1[group][player])
 
     # Create a function to split list
-    def split(arr, size):
-        arrs = []
-        while len(arr) > size:
-            pice = arr[:size]
-            arrs.append(pice)
-            arr = arr[size:]
-        arrs.append(arr)
-        return arrs
+    # def split(arr, size):
+    #     arrs = []
+    #     while len(arr) > size:
+    #         pice = arr[:size]
+    #         arrs.append(pice)
+    #         arr = arr[size:]
+    #     arrs.append(arr)
+    #     return arrs
 
-    income_game1 = split(income_game1, 5)
+    # income_game1 = split(income_game1, 5)
+    income_game2 = []
+    h = 0
+    for z in repartition:
+        income_game2.append(income_game1[h:z + h])
+        h = z
 
     # print(income_game1)
 
@@ -33,7 +38,7 @@ def Change(customers_dict2, player_gain1, amounts ):
     for group in range(len(customers_dict2)):
         loop_dico = []
         for player in range(len(customers_dict2[group])):
-            loop_dico.append(replace_at_index1(customers_dict3[group][player], 1, income_game1[group][player]))
+            loop_dico.append(replace_at_index1(customers_dict3[group][player], 1, income_game2[group][player]))
         customers_dict4.append(loop_dico)
 
     """ Let's now keep only players with income > 0 after the game 1 """
