@@ -53,6 +53,7 @@ class Craps(object):
             return cote
         #print(result_S)
         for k in result_S:
+            global result_amount2
             result_amount2 = np.array(result_S) * np.array(result_amount)
         lost_bets =np.array(result_amount2) * np.array(Cote(bets))
         result4 = []
