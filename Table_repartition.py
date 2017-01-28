@@ -17,7 +17,7 @@ def table_repartition(dic,nb_table, customers_dict0):
     # 3) I select only the list with the full number of player ( the sum of player for each table must be 16)
     list2 = []
     for group in list1:
-        if sum(group) == 16:
+        if sum(group) == 19:
             list2.append(group)
         else:
             pass

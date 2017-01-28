@@ -83,8 +83,8 @@ class CASINO(object):
                                 loop_amount.append(min_list[group])
                             else:
                                 loop_amount.append(0)
-                        elif customers_dict2[group][player][0] > self.per_returning and customers_dict2[group][player][0] \
-                            <= (self.number_customers - self.per_bachelors):
+                        elif customers_dict2[group][player][0] > self.per_returning and customers_dict2[group][player]\
+                                [0] <= (self.number_customers - self.per_bachelors):
                             loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 3))))
                         else:
                             loop_amount.append(random.randint(0, int(((customers_dict2[group][player][1]) / 1))))
@@ -125,8 +125,8 @@ class CASINO(object):
                     casino_gain1.append(amounts_game1[game][0][0])
 
                 casino_gain1 = casino_gain1
-                #print( "money won by players" +str(player_gain1))
-                #print("money casino " +str(casino_gain1))
+                #print(player_gain1)
+                #print(casino_gain1)
 
                 """ Money the croupiers wins 0.5% """
 
@@ -161,7 +161,7 @@ class CASINO(object):
 
                 result_final = [player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink),\
                                 sum(tips_all)]
-                return result_final #player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink), sum(tips_all)
+                return result_final
 
             Evening(customers_dict)
             A = Evening(customers_dict)
@@ -174,17 +174,9 @@ class CASINO(object):
             """ Casino fees and cash for the night """
 
             casino_wage_fix = 200 * (self.roulette_tables+self.craps_tables + self.barmen)
-
             casino_wage_total = casino_wage_fix + sum(A[3]+B[3]+C[3])
-            #print(casino_wage_total)
-
             casino_lost = sum(list(map(sum, A[2]))) + sum(list(map(sum, B[2]))) + sum(list(map(sum, C[2])))
-            #print(casino_lost)
-
             casino_drink_night = A[4]+B[4]+C[4]
-            #print(casino_drink_night)
-
-            #print(sum(A[1]+B[1]+C[1])) # casino gain from games
 
             if number_of_evenings != 0:
                 self.cash = casino_money
@@ -195,6 +187,7 @@ class CASINO(object):
                     A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
             print("the casino has "+str(casino_money),"$ after the night" , "with a cash start of "+str(self.cash),"$")
         result_nights.append(casino_money)
+
         return result_nights
 
-CASINO(5000, 2, 2,  4, 200, 16, 10, 2).SimulateEvening(10)
+CASINO(5000, 2, 2,  4, 200, 19, 10, 2).SimulateEvening(3)
