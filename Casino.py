@@ -211,6 +211,7 @@ class CASINO(object):
             casino_wage_fix = 200 * (self.roulette_tables + self.craps_tables + self.barmen)
             casino_wage_total = casino_wage_fix + sum(A[3] + B[3] + C[3])
             casino_lost = sum(list(map(sum, A[2]))) + sum(list(map(sum, B[2]))) + sum(list(map(sum, C[2])))
+            casino_croupiers = sum(A[3] + B[3] + C[3])
             casino_drink_night = A[4] + B[4] + C[4]
             barmen_tips = A[5] + B[5] + C[5]
 
@@ -222,12 +223,12 @@ class CASINO(object):
                 self.cash = casino_money
 
                 casino_money = self.cash + casino_drink_night + sum(
-                    A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
+                    A[1] + B[1] + C[1]) - casino_wage_total - casino_lost - casino_croupiers
                 cash_nights.append(casino_money)
             else:
                 cash_nights.append(self.cash)
                 casino_money = self.cash + casino_drink_night + sum(
-                    A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
+                    A[1] + B[1] + C[1]) - casino_wage_total - casino_lost - casino_croupiers
                 cash_nights.append(casino_money)
             print("the casino has " + str(casino_money), "$ after the night", "with a cash start of " + str(self.cash), "$")
 
