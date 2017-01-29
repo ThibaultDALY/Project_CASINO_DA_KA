@@ -11,7 +11,7 @@ import Simulation
 import operator
 from collections import Counter
 from matplotlib import pyplot as plt
-# random.seed(7)
+random.seed(3456)
 
 class CASINO(object):
     def __init__(self, cash, roulette_tables, craps_tables, barmen, employee_wage, number_customers,
@@ -35,14 +35,17 @@ class CASINO(object):
         money_croupiers = []
         money_croupiers_all = []
         for number_of_evenings in range(evenings):
-
+            "Step 1 : Set up the configuration for the  determination of each type of players"
             customer_returning = random.sample(range(100, 300), self.per_returning)
             customer_bachelors = random.sample(range(200, 500), self.per_bachelors)
             customer_one_time = []
             for i in range(self.number_customers - (self.per_returning + self.per_bachelors)):
                 customer_one_time.append(random.randint(200, 300))
 
-            # 200 bonus for bachelors
+            """Limit 1 : We attribute the 200 bonus for bachelors but we are limited to keep the bachelor players to bet
+            an amount between 0 to their amount at the beginning of the game while that is was stipulated that bachelor
+             cannot bet the bonus for the first round"""
+
             customer_bachelors = [x+200 for x in customer_bachelors]
 
             customers_list = [customer_returning, customer_one_time, customer_bachelors]
@@ -51,11 +54,15 @@ class CASINO(object):
             list_id = []
             for i in range(1, self.number_customers + 1):
                 list_id.append(i)
+
+            """We store identification and initial income into a dictionary to easily follow each player
+            during the entire evening """
+
             customers_dict = zip(list_id, customers_merged)
             customers_dict = dict(customers_dict)
             print(customers_dict)
 
-            """ Drink before playing !"""
+            """ Drink or not before playing !"""
             casino_money_drink = []
             tips_all = []
 
@@ -78,12 +85,15 @@ class CASINO(object):
 
             # creating a function that will run a game on each table and have a dictionary as an output
             def Evening(customers_dict):
-                def sortByKey(dict):
-                    sortedByKeyDict = sorted(dict.items(), key=lambda t: t[0])
-                    return sortedByKeyDict
+                # We just  transform the dictionary into a list of tuples to make easier manipulation
+                def Dict_to_tuple(dict):
+                    transformation = sorted(dict.items(), key=lambda t: t[0])
+                    return transformation
 
-                customers_dict0 = sortByKey(customers_dict)
+                customers_dict0 = Dict_to_tuple(customers_dict)
 
+                """ Step 2 : The 100 players are randomly distributed among the 20 tables of the casino. See the
+                Table_repartition.py script to get more details for the procedure"""
                 customers_dict_int = Table_repartition.table_repartition(customers_dict0, \
                                                         self.craps_tables+self.roulette_tables, len(customers_dict0))
                 repartition2 = customers_dict_int[2]
@@ -96,7 +106,7 @@ class CASINO(object):
 
                 customers_dict2 = []
                 for group in customers_dict_int2:
-                    customers_dict2.append(sortByKey(group))
+                    customers_dict2.append(Dict_to_tuple(group))
                 # print(customers_dict2)
 
                 """ Create the random minimum for the each game """
@@ -173,7 +183,10 @@ class CASINO(object):
                 for croupier in range(len(customers_dict2)):
                     croupiers_gain.append(round(casino_gain1[croupier] * 0.05))
 
+                """ Step 3 : Update the income of each player after the first round of the evening"""
+
                 # doing some manipulation on the list for winning and loosing money of the players
+                " See the Manipulation_dict.py to get more details"
                 player_game1 = Manipulation_dict.Change(customers_dict2, player_gain1, amounts, repartition2)
                 #print(player_game1)
 
@@ -241,7 +254,7 @@ class CASINO(object):
         return cash_nights, barmen_tips_all, casino_drink_night_all, money_croupiers_all
 
 
-W = CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(5)
+W = CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(1000)
 
 """ Evolution of the cash of the Casino """
 print(W[0])
@@ -269,11 +282,11 @@ plt.title('Tips per croupiers by evening')
 plt.grid(True)
 plt.show()
 
-""" Number of drinks by night """
-# number_of_drinks = CASINO(50000, 2, 2, 4, 200, 20, 10, 2).SimulateEvening(5)[2]
+# """ Number of drinks by night """
+# number_of_drinks = CASINO(50000, 2, 2, 4, 200, 20, 10, 2).SimulateEvening(1000)[2]
 # number_of_drinks = [x / 20 for x in number_of_drinks]
 # plt.plot(number_of_drinks)
-# plt.ylabel('Average tips per night')
+# plt.ylabel('Numbers of drinks per evening')
 # plt.xlabel('Evenings')
 # plt.title('Number of drinks ')
 # plt.grid(True)
