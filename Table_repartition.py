@@ -2,13 +2,12 @@ import random
 import itertools
 
 def table_repartition(dic,nb_table,nb_player_round_i):
+
     # 1) I create a function to generate a list of random number between 1 to 5
     def function(nb_table):
         number = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         list = [random.choice(number) for _ in range(nb_table)]
         return list
-
-# azdazd
 
     # 2) I draw 5000 times all the possible list that we can be randomly get
     list1 = []
@@ -35,23 +34,14 @@ def table_repartition(dic,nb_table,nb_player_round_i):
             list4_full.append(repart)
         else:
             pass
-    # compteur = 0
-    # LIST = []
-    # while compteur < len(dic):
-    #     LIST.append(dict(random.sample(dic,list4_full[compteur])))
-    #     dic = dict(set(dic.items())) - dict(set(dic[compteur].items()))
-    #     compteur += 1
-    # print(LIST)
-
-    #print("Start", dic)
 
     def filter_list(full_list, excludes):
         s = set(excludes)
         return (x for x in full_list if x not in s)
 
     list_final = []
-
     test = dic
+
     for compo in list4_full:
         A = random.sample(test, compo)
         list_final.append(A)

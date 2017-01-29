@@ -67,5 +67,3 @@ class Craps(object):
         # print(result_final)  # list of the full lost and gains from the customers and casino :
         return result_final
 
-
-
