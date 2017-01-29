@@ -11,7 +11,7 @@ def table_repartition(dic,nb_table,nb_player_round_i):
 
     # 2) I draw 5000 times all the possible list that we can be randomly get
     list1 = []
-    for i in range(10000):
+    for i in range(5000):
         list1.append(function(nb_table))
 
     # 3) I select only the list with the full number of player ( the sum of player for each table must be nb player)
