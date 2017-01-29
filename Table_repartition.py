@@ -14,7 +14,7 @@ def table_repartition(dic,nb_table,nb_player_round_i):
     for i in range(10000):
         list1.append(function(nb_table))
 
-    # 3) I select only the list with the full number of player ( the sum of player for each table must be 16)
+    # 3) I select only the list with the full number of player ( the sum of player for each table must be nb player)
     list2 = []
     for group in list1:
         if sum(group) == nb_player_round_i:
@@ -46,7 +46,7 @@ def table_repartition(dic,nb_table,nb_player_round_i):
         A = random.sample(test, compo)
         list_final.append(A)
         test = list(filter_list(test, A))
-        # player = list(filter_list(dic, A))
+
     result_table = [list_final, list4_gross, list4_full]
     return result_table
 

@@ -26,10 +26,12 @@ class CASINO(object):
         self.cash = cash
 
     def SimulateEvening(self, evenings):
-        result_nights = []
-        loop_nights = []
+
+        cash_nights = []
         barmen_tips_all = []
         barmen_tips_loop = []
+        casino_drink_night_loop = []
+        casino_drink_night_all = []
         for number_of_evenings in range(evenings):
 
             customer_returning = random.sample(range(100, 300), self.per_returning)
@@ -47,6 +49,27 @@ class CASINO(object):
             customers_dict = zip(list_id, customers_merged)
             customers_dict = dict(customers_dict)
             print(customers_dict)
+
+            """ Drink before playing !"""
+            casino_money_drink = []
+            tips_all = []
+
+            for keys in customers_dict:
+                get_a_drink = random.randint(1, 2)
+                get_a_bartender = random.randint(1, 2)
+                if customers_dict[keys] > 60:
+                    if get_a_drink == 1:
+                        if get_a_bartender == 1:
+                            tips = random.randint(0, 20)
+                            tips_all.append(tips)
+                            casino_money_drink.append(20)
+                            customers_dict[keys] = customers_dict[keys] - (20 + tips)
+                        else:
+                            pass
+                    else:
+                        pass
+                else:
+                    pass
 
             # creating a function that will run a game on each table and have a dictionary as an output
             def Evening(customers_dict):
@@ -149,10 +172,7 @@ class CASINO(object):
                 player_game1 = Manipulation_dict.Change(customers_dict2, player_gain1, amounts, repartition2)
                 #print(player_game1)
 
-                """ Drink time """
-                casino_money_drink = []
-                tips = 0
-                tips_all = []
+                """ Drink time after the game """
 
                 for keys in player_game1:
                     get_a_drink = random.randint(1,2)
@@ -172,7 +192,7 @@ class CASINO(object):
                         pass
                 # money made by the casino from drinks
                 result_final = [player_game1, casino_gain1, player_gain1, croupiers_gain, sum(casino_money_drink),\
-                                sum(tips_all)]
+                                tips_all]
                 return result_final
 
             Evening(customers_dict)
@@ -189,40 +209,46 @@ class CASINO(object):
             casino_drink_night = A[4] + B[4] + C[4]
             barmen_tips = A[5] + B[5] + C[5]
             barmen_tips_loop.append(np.mean(barmen_tips))
-
+            casino_drink_night_loop.append(casino_drink_night)
 
             if number_of_evenings != 0:
                 self.cash = casino_money
-                loop_nights.append(self.cash)
+
                 casino_money = self.cash + casino_drink_night + sum(
                     A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
-                loop_nights.append(casino_money)
+                cash_nights.append(casino_money)
             else:
-                loop_nights.append(self.cash)
+                cash_nights.append(self.cash)
                 casino_money = self.cash + casino_drink_night + sum(
                     A[1] + B[1] + C[1]) - casino_wage_total - casino_lost
-                loop_nights.append(casino_money)
+                cash_nights.append(casino_money)
             print("the casino has " + str(casino_money), "$ after the night", "with a cash start of " + str(self.cash), "$")
 
-        result_nights.append(loop_nights)
-        result_nights = result_nights[0]
         barmen_tips_all.append(barmen_tips_loop)
         barmen_tips_all = barmen_tips_all[0]
-        return result_nights, barmen_tips_all
+        casino_drink_night_all.append(casino_drink_night_loop)
+        casino_drink_night_all = casino_drink_night_all[0]
+        print(casino_drink_night_all)
+        return cash_nights, barmen_tips_all, casino_drink_night_all
+
+
+#CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(2)
+
 
 """ Evolution of the cash of the Casino """
-cash_flow = CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(2)[0]
+# cash_flow = CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(3)[0]
+#
+# print(cash_flow)
+# plt.plot(cash_flow)
+# plt.ylabel('Cash of the casino')
+# plt.xlabel('Evenings')
+# plt.title('Profit of the casino ')
+# plt.grid(True)
+# plt.show()
 
-print(cash_flow)
-plt.plot(cash_flow)
-plt.ylabel('Cash of the casino')
-plt.xlabel('Evenings')
-plt.title('Profit of the casino ')
-plt.grid(True)
-plt.show()
-
-# """ Average tips by night """
-# average_tips = CASINO(5000, 2, 2, 4, 200, 20, 10, 2).SimulateEvening(5)[1]
+""" Average tips by night """
+# average_tips = CASINO(50000, 2, 2, 4, 200, 20, 10, 2).SimulateEvening(5)[1]
+#
 # plt.plot(average_tips)
 # plt.ylabel('Average tips per night')
 # plt.xlabel('Evenings')
@@ -230,7 +256,12 @@ plt.show()
 # plt.grid(True)
 # plt.show()
 
-
-
-
-# CASINO(500, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(1)
+""" Number of drinks by night """
+number_of_drinks = CASINO(50000, 2, 2, 4, 200, 20, 10, 2).SimulateEvening(5)[2]
+number_of_drinks = [x / 20 for x in number_of_drinks]
+plt.plot(number_of_drinks)
+plt.ylabel('Average tips per night')
+plt.xlabel('Evenings')
+plt.title('Tips in dollars ')
+plt.grid(True)
+plt.show()

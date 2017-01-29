@@ -22,7 +22,7 @@ amounts1 = [10, 85, 120, 65, 150, 122]
 # print(table2.SimulateGame(bets2, amounts1))
 # print(table2.SimulateGame(bets2, amounts1))
 # #
-#
+# #
 # def dice(n):
 #     rolls = []
 #     for i in range(n):
@@ -33,8 +33,10 @@ amounts1 = [10, 85, 120, 65, 150, 122]
 # labels, values = zip(*Counter(thousandsthrows).items())
 # indexes = np.arange(len(labels))
 # width = 1
-# plt.bar(indexes, values,width)
-# plt.xticks(indexes + width * 0.5, labels)
+# plt.bar(indexes, values, width)
+# plt.title('Simualtion of 1000 throws of 2 dices')
+# plt.xticks(indexes + 0.5, labels)
+# plt.grid(True)
 # plt.show()
 
 # Simulation to find the correct amount that should be won by the players
