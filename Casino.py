@@ -253,7 +253,6 @@ class CASINO(object):
         money_croupiers_all = money_croupiers_all[0]
         return cash_nights, barmen_tips_all, casino_drink_night_all, money_croupiers_all
 
-
 W = CASINO(50000, 10, 10, 4, 200, 100, 50, 20).SimulateEvening(1000)
 
 """ Evolution of the cash of the Casino """
