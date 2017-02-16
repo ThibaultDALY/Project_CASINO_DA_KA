@@ -34,10 +34,10 @@ class Roulette(object):
                 else:
                     result_S.append(1)
             number = sum(x > 0 for x in result_S)
-            # if number > 0:
-            #     print("There are %d correct bet(s)" % (number,))
-            # else:
-            #     print("No winners this round")
+            if number > 0:
+                print("There are %d correct bet(s)" % (number,))
+            else:
+                print("No winners this round")
             return result_S
         SpinTheWheel(bets)
         #print(result_S) # list of bets that are winners as dummies !
